@@ -6,8 +6,6 @@
 //  Copyright (c) 2016 LiosMor Security. All rights reserved.
 //
 
-#include <future>
-#include <thread>
 #include <unistd.h>
 #include "ServerConnect.h"
 
