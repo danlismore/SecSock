@@ -16,6 +16,7 @@ class ServerConnect : public Connect
 public:
     ServerConnect(string host, unsigned short port, bool is_secure = true) : Connect(host, port, is_secure) {};
     int createSocket();
+    int bindListen(int sock, struct sockaddr* addr);
     void startServer();
     void stopServer();
 private:

@@ -10,19 +10,32 @@
 
 int ServerConnect::createSocket()
 {
-    int sock;
-    struct sockaddr_in addr;
-    
-    addr.sin_family = m_type;
-    addr.sin_port = htons(m_port);
-    addr.sin_addr.s_addr = inet_addr(m_host.c_str());
-    sock = socket(m_type, SOCK_STREAM, 0);
+    int sock = socket(m_type, SOCK_STREAM, 0);
+    if(m_type == IPv4)
+    {
+        struct sockaddr_in addr;
+        inet_pton(m_type, m_host.c_str(), &(addr.sin_addr));
+        addr.sin_port = htons(m_port);
+        sock = bindListen(sock,(struct sockaddr *)&addr);
+    }
+    if(m_type == IPv6)
+    {
+        struct sockaddr_in6 addr;
+        inet_pton(m_type, m_host.c_str(), &(addr.sin6_addr));
+        addr.sin6_port = htons(m_port);
+        sock = bindListen(sock,(struct sockaddr *)&addr);
+    }
+    return sock;
+}
+
+int ServerConnect::bindListen(int sock, struct sockaddr* addr)
+{
     if(sock < 0)
     {
         perror("Unable to establish socket!");
         exit(EXIT_FAILURE);
     }
-    if(bind(sock, (struct sockaddr *) &addr, sizeof(addr) < 0))
+    if(bind(sock, (struct sockaddr *) &addr, sizeof(addr)) < 0)
     {
         perror("Unable to bind to address!");
         exit(EXIT_FAILURE);
@@ -34,6 +47,7 @@ int ServerConnect::createSocket()
     }
     return sock;
 }
+
 
 void ServerConnect::startServer()
 {

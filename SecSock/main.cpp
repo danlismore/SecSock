@@ -10,7 +10,7 @@
 #include "ServerConnect.h"
 
 int main(int argc, const char * argv[]) {
-    ServerConnect server("0.0.0.0", 60000);
+    ServerConnect server("0.0.0.0", 32);
     server.startServer();
     return 0;
 }
