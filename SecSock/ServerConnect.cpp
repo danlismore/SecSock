@@ -15,27 +15,28 @@ int ServerConnect::createSocket()
     {
         struct sockaddr_in addr;
         inet_pton(m_type, m_host.c_str(), &(addr.sin_addr));
+        addr.sin_family = htons(m_type);
         addr.sin_port = htons(m_port);
-        sock = bindListen(sock,(struct sockaddr *)&addr);
+        sock = bindListen(sock,(struct sockaddr *)&addr, sizeof(addr));
     }
     if(m_type == IPv6)
     {
         struct sockaddr_in6 addr;
         inet_pton(m_type, m_host.c_str(), &(addr.sin6_addr));
         addr.sin6_port = htons(m_port);
-        sock = bindListen(sock,(struct sockaddr *)&addr);
+        sock = bindListen(sock,(struct sockaddr *)&addr, sizeof(addr));
     }
     return sock;
 }
 
-int ServerConnect::bindListen(int sock, struct sockaddr* addr)
+int ServerConnect::bindListen(int sock, struct sockaddr* addr, socklen_t addrsize)
 {
     if(sock < 0)
     {
         perror("Unable to establish socket!");
         exit(EXIT_FAILURE);
     }
-    if(bind(sock, (struct sockaddr *) &addr, sizeof(addr)) < 0)
+    if(bind(sock, addr, addrsize) < 0)
     {
         perror("Unable to bind to address!");
         exit(EXIT_FAILURE);
