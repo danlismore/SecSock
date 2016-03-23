@@ -6,9 +6,16 @@
 //  Copyright (c) 2016 LiosMor Security. All rights reserved.
 //
 
+#include <arpa/inet.h>
 #include <sys/socket.h>
 #include "Connect.h"
 
+/**
+ * Method name: Connect
+ * Description: Constructor for the Connect class.
+ * Parameters: host (string) - ip address with or without port, 
+ *             is_secure (bool) - connection is secure
+ */
 Connect::Connect(string host, bool is_secure)
 {
     m_secure = is_secure;
@@ -40,6 +47,13 @@ Connect::Connect(string host, bool is_secure)
     }
 }
 
+/**
+ * Method name: Connect
+ * Description: Constructor for the Connect class.
+ * Parameters: host (string) - ip address,
+ *             port (unsigned short) - port number,
+ *             is_secure (bool) - connection is secure
+ */
 Connect::Connect(string host, unsigned short port, bool is_secure)
 {
     m_secure = is_secure;
@@ -62,26 +76,51 @@ Connect::Connect(string host, unsigned short port, bool is_secure)
     }
 }
 
+/**
+ * Method name: setHost
+ * Description: Set the host to a specified string.
+ * Parameters: host (string) - ip address
+ */
 void Connect::setHost(string host)
 {
     m_host = host;
 }
 
+/**
+ * Method name: setPort
+ * Description: Set the port to a specified number.
+ * Parameters: port (unsigned short) - port number
+ */
 void Connect::setPort(unsigned short port)
 {
     m_port = port;
 }
 
+/**
+ * Method name: setCert
+ * Description: Set the path to a cert file.
+ * Parameters: cert (string) - cert path
+ */
 void Connect::setCert(string cert)
 {
     m_cert = cert;
 }
 
+/**
+ * Method name: setKey
+ * Description: Set the path to a key file.
+ * Parameters: key (string) - key path
+ */
 void Connect::setKey(string key)
 {
     m_key = key;
 }
 
+/**
+ * Method name: validateHost
+ * Description: Check whether a host is valid and set type to IP version.
+ * Parameters: host (string) - the host to checj
+ */
 bool Connect::validateHost(const string &host)
 {
     struct sockaddr_in sa4;
@@ -102,23 +141,41 @@ bool Connect::validateHost(const string &host)
     }
 }
 
+/**
+ * Method name: portCheck
+ * Description: Check whether a port is in a valid range.
+ * Parameters: port (unsigned short) - the port to check
+ */
 bool Connect::portCheck(const unsigned short& port)
 {
     return (0 < port && port < 65535);
 }
 
+/**
+ * Method name: portCheck
+ * Description: Check whether port as a string is a valid number and is in a valid range.
+ * Parameters: port (string) - the port to check
+ */
 bool Connect::portCheck(const string& port)
 {
     return std::all_of(port.begin(), port.end(), ::isdigit) &&
        (0 < std::stoi(port) && std::stoi(port) < 65535);
 }
 
+/**
+ * Method name: initOpenSSL
+ * Description: Initiate OpenSSL algorithms and error strings.
+ */
 void Connect::initOpenSSL()
 {
     SSL_load_error_strings();
     OpenSSL_add_ssl_algorithms();
 }
 
+/**
+ * Method name: createContext
+ * Description: Create the context, get cert and key from file.
+ */
 SSL_CTX * Connect::createContext()
 {
     SSL_CTX * ctx = SSL_CTX_new(TLSv1_method());
@@ -141,7 +198,11 @@ SSL_CTX * Connect::createContext()
     return ctx;
 }
 
-void Connect::cleanup_openssl()
+/**
+ * Method name: cleanupOpenSSL
+ * Description: Clean up OpenSSL.
+ */
+void Connect::cleanupOpenSSL()
 {
     EVP_cleanup();
 }

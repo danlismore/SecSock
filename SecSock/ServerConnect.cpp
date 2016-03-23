@@ -6,6 +6,9 @@
 //  Copyright (c) 2016 LiosMor Security. All rights reserved.
 //
 
+#include <future>
+#include <thread>
+#include <unistd.h>
 #include "ServerConnect.h"
 
 int ServerConnect::createSocket()
@@ -56,7 +59,6 @@ void ServerConnect::startServer()
     initOpenSSL();
     SSL_CTX * ctx = createContext();
     int sock = createSocket();
-    
     while(m_running)
     {
         unsigned int len;
@@ -92,7 +94,9 @@ void ServerConnect::startServer()
                 SSL_write(ssl, reply.c_str(), reply.length());
             }
         }
+        close(client);
     }
+    close(sock);
 }
 
 void ServerConnect::stopServer()

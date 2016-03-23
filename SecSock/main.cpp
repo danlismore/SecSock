@@ -7,10 +7,12 @@
 //
 
 #include <iostream>
+#include <future>
+#include <thread>
 #include "ServerConnect.h"
 
 int main(int argc, const char * argv[]) {
-    ServerConnect server("0.0.0.0", 32);
+    ServerConnect server("127.0.0.1", 6110);
     server.startServer();
     return 0;
 }
