@@ -12,7 +12,7 @@
 #include "ServerConnect.h"
 
 int main(int argc, const char * argv[]) {
-    ServerConnect server("127.0.0.1", 6110);
+    ServerConnect server("127.0.0.1", 6110, false);
     server.startServer();
     return 0;
 }

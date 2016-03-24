@@ -34,17 +34,17 @@ int ServerConnect::bindListen(int sock, struct sockaddr* addr, socklen_t addrsiz
 {
     if(sock < 0)
     {
-        perror("Unable to establish socket!");
+        perror("Unable to establish socket");
         exit(EXIT_FAILURE);
     }
     if(bind(sock, addr, addrsize) < 0)
     {
-        perror("Unable to bind to address!");
+        perror("Unable to bind to address");
         exit(EXIT_FAILURE);
     }
     if(listen(sock, 1) < 0)
     {
-        perror("An error occured while listening to socket!");
+        perror("An error occured while listening to socket");
         exit(EXIT_FAILURE);
     }
     return sock;
@@ -91,6 +91,10 @@ void ServerConnect::startServer()
             {
                 SSL_write(ssl, reply.c_str(), reply.length());
             }
+        }
+        else
+        {
+            send(client, reply.c_str(), reply.length(), 0);
         }
         close(client);
     }
