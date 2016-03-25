@@ -7,6 +7,7 @@
 //
 
 #include <unistd.h>
+#include <vector>
 #include "ServerConnect.h"
 
 int ServerConnect::createSocket()
@@ -16,7 +17,6 @@ int ServerConnect::createSocket()
     {
         struct sockaddr_in addr;
         inet_pton(m_type, m_host.c_str(), &(addr.sin_addr));
-        addr.sin_family = htons(m_type);
         addr.sin_port = htons(m_port);
         sock = bindListen(sock,(struct sockaddr *)&addr, sizeof(addr));
     }
@@ -57,10 +57,11 @@ void ServerConnect::startServer()
     initOpenSSL();
     SSL_CTX * ctx = createContext();
     int sock = createSocket();
+    int client = 0;
+    std::vector<char> v(3000);
     while(m_running)
     {
         unsigned int len;
-        int client;
         if(m_type == IPv4)
         {
             struct sockaddr_in addr;
@@ -75,10 +76,10 @@ void ServerConnect::startServer()
         }
         if (client < 0)
         {
-            perror("Unable to accept connection to client!");
+            perror("Unable to accept connection to client");
             exit(EXIT_FAILURE);
         }
-        reply = "test\n";
+        reply = "";
         if(m_secure)
         {
             SSL * ssl = SSL_new(ctx);
@@ -89,15 +90,43 @@ void ServerConnect::startServer()
             }
             else
             {
-                SSL_write(ssl, reply.c_str(), reply.length());
+                if(SSL_read(ssl, &v[0], (int) v.size()) < 0)
+                {
+                    perror("Could not read from secure client");
+                    exit(EXIT_FAILURE);
+                }
+                if(SSL_write(ssl, reply.c_str(), reply.length()) < 0)
+                {
+                    perror("Could not write to client");
+                    exit(EXIT_FAILURE);
+                }
+                for (auto it = v.begin(); it != v.end(); it++)
+                {
+                    printf("%c", *it);
+                    reply += *it;
+                }
             }
         }
         else
         {
-            send(client, reply.c_str(), reply.length(), 0);
+            if(read(client, &v[0], v.size()) < 0)
+            {
+                perror("Could not read from client");
+                exit(EXIT_FAILURE);
+            }
+            else if(write(client, reply.c_str(), reply.length()) < 0)
+            {
+                perror("Could not write to client");
+                exit(EXIT_FAILURE);
+            }
+            for (auto it = v.begin(); it != v.end(); it++)
+            {
+                printf("%c", *it);
+                reply += *it;
+            }
         }
-        close(client);
     }
+    close(client);
     close(sock);
 }
 

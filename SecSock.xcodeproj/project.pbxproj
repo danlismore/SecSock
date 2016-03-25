@@ -31,6 +31,7 @@
 		4DBD67B91CA2BF0C005695DC /* Connect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Connect.h; sourceTree = "<group>"; };
 		4DBD67BA1CA2BF0C005695DC /* ServerConnect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ServerConnect.cpp; sourceTree = "<group>"; };
 		4DBD67BB1CA2BF0C005695DC /* ServerConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerConnect.h; sourceTree = "<group>"; };
+		4DBD67BF1CA57A17005695DC /* HTTPHeaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPHeaders.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +68,7 @@
 				4DBD67B81CA2BF0C005695DC /* Connect.cpp */,
 				4DBD67B91CA2BF0C005695DC /* Connect.h */,
 				4DBD67BA1CA2BF0C005695DC /* ServerConnect.cpp */,
+				4DBD67BF1CA57A17005695DC /* HTTPHeaders.h */,
 				4DBD67BB1CA2BF0C005695DC /* ServerConnect.h */,
 			);
 			path = SecSock;
