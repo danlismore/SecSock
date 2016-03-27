@@ -8,6 +8,7 @@
 
 #include <unistd.h>
 #include <vector>
+#include "HTTP.h"
 #include "ServerConnect.h"
 
 int ServerConnect::createSocket()
@@ -60,7 +61,7 @@ void ServerConnect::startServer()
     SSL_CTX * ctx = createContext();
     int sock = createSocket();
     int client = 0;
-    std::vector<char> v;
+    std::vector<char> v(4096);
     while(m_running)
     {
         unsigned int len;
@@ -121,11 +122,14 @@ void ServerConnect::startServer()
                 perror("Could not write to client");
                 exit(EXIT_FAILURE);
             }
+            HTTP http;
+            http.parseAndRespond(v);
             for (auto it = v.begin(); it != v.end(); it++)
             {
                 printf("%c", *it);
                 reply += *it;
             }
+            
         }
     }
     close(client);

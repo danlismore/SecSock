@@ -6,7 +6,10 @@
 //  Copyright (c) 2016 LiosMor Security. All rights reserved.
 //
 
+#include <algorithm>
 #include "HTTP.h"
+
+using std::find;
 
 HTTP::HTTP()
 {
@@ -88,4 +91,24 @@ string HTTP::getStatusCode(unsigned short status_code)
     map<const unsigned short, const string>::iterator status_it;
     status_it = status_codes.find(status_code);
     return status_it->second;
+}
+
+string HTTP::parseAndRespond(vector<char> request)
+{
+    vector<char>::iterator posf, posl;
+    posf = find(request.begin(), request.end(), ' ');
+    string request_type(request.begin(), posf);
+    return request_type;
+}
+
+string HTTP::getFiletype(string filename)
+{
+    if(filename.find(".html") != string::npos)
+        return "text/html";
+    else if(filename.find(".gif") != string::npos)
+        return "image/gif";
+    else if(filename.find(".jpg") != string::npos)
+        return "image/jpeg";
+    else
+        return "text/plain";
 }

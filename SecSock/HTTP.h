@@ -22,15 +22,13 @@ class HTTP
 {
 public:
     HTTP();
-    ~HTTP();
     string parseAndRespond(vector<char> request);
-    string getStatusCode(unsigned short status_code);
 private:
-    string http_version;
-    string request_type;
     map<const unsigned short, const string> status_codes;
 private:
     void initStatusCodes();
+    string getFiletype(string filename);
+    string getStatusCode(unsigned short status_code);
 };
 
 #endif /* defined(__SecSock__HTTP__) */
