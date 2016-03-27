@@ -10,9 +10,10 @@
 #include <future>
 #include <thread>
 #include "ServerConnect.h"
+#include "HTTP.h"
 
 int main(int argc, const char * argv[]) {
-    ServerConnect server("127.0.0.1", 6110, false);
+    ServerConnect server("127.0.0.1", 6001, false);
     server.startServer();
     return 0;
 }

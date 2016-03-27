@@ -17,6 +17,7 @@ int ServerConnect::createSocket()
     {
         struct sockaddr_in addr;
         inet_pton(m_type, m_host.c_str(), &(addr.sin_addr));
+        addr.sin_family = htons(m_type);
         addr.sin_port = htons(m_port);
         sock = bindListen(sock,(struct sockaddr *)&addr, sizeof(addr));
     }
@@ -24,6 +25,7 @@ int ServerConnect::createSocket()
     {
         struct sockaddr_in6 addr;
         inet_pton(m_type, m_host.c_str(), &(addr.sin6_addr));
+        addr.sin6_family = htons(m_type);
         addr.sin6_port = htons(m_port);
         sock = bindListen(sock,(struct sockaddr *)&addr, sizeof(addr));
     }
@@ -58,7 +60,7 @@ void ServerConnect::startServer()
     SSL_CTX * ctx = createContext();
     int sock = createSocket();
     int client = 0;
-    std::vector<char> v(3000);
+    std::vector<char> v;
     while(m_running)
     {
         unsigned int len;

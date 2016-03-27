@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D9B73891CA6DC9700664561 /* HTTP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D9B73881CA6DC9700664561 /* HTTP.cpp */; };
 		4DBD67B21CA2BEB9005695DC /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DBD67B11CA2BEB9005695DC /* main.cpp */; };
 		4DBD67BC1CA2BF0C005695DC /* Connect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DBD67B81CA2BF0C005695DC /* Connect.cpp */; };
 		4DBD67BD1CA2BF0C005695DC /* ServerConnect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DBD67BA1CA2BF0C005695DC /* ServerConnect.cpp */; };
@@ -25,13 +26,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4D9B73881CA6DC9700664561 /* HTTP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HTTP.cpp; sourceTree = "<group>"; };
 		4DBD67AE1CA2BEB9005695DC /* SecSock */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SecSock; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DBD67B11CA2BEB9005695DC /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		4DBD67B81CA2BF0C005695DC /* Connect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Connect.cpp; sourceTree = "<group>"; };
 		4DBD67B91CA2BF0C005695DC /* Connect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Connect.h; sourceTree = "<group>"; };
 		4DBD67BA1CA2BF0C005695DC /* ServerConnect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ServerConnect.cpp; sourceTree = "<group>"; };
 		4DBD67BB1CA2BF0C005695DC /* ServerConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerConnect.h; sourceTree = "<group>"; };
-		4DBD67BF1CA57A17005695DC /* HTTPHeaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPHeaders.h; sourceTree = "<group>"; };
+		4DBD67BF1CA57A17005695DC /* HTTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTP.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,8 +69,9 @@
 				4DBD67B11CA2BEB9005695DC /* main.cpp */,
 				4DBD67B81CA2BF0C005695DC /* Connect.cpp */,
 				4DBD67B91CA2BF0C005695DC /* Connect.h */,
+				4D9B73881CA6DC9700664561 /* HTTP.cpp */,
+				4DBD67BF1CA57A17005695DC /* HTTP.h */,
 				4DBD67BA1CA2BF0C005695DC /* ServerConnect.cpp */,
-				4DBD67BF1CA57A17005695DC /* HTTPHeaders.h */,
 				4DBD67BB1CA2BF0C005695DC /* ServerConnect.h */,
 			);
 			path = SecSock;
@@ -130,6 +133,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D9B73891CA6DC9700664561 /* HTTP.cpp in Sources */,
 				4DBD67BC1CA2BF0C005695DC /* Connect.cpp in Sources */,
 				4DBD67B21CA2BEB9005695DC /* main.cpp in Sources */,
 				4DBD67BD1CA2BF0C005695DC /* ServerConnect.cpp in Sources */,
@@ -257,6 +261,7 @@
 				4DBD67B71CA2BEB9005695DC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
