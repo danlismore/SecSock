@@ -13,8 +13,6 @@
 #include <openssl/ssl.h>
 #include <openssl/err.h>
 
-using std::string;
-
 class Connect
 {
 public:
@@ -35,7 +33,7 @@ public:
      * Parameters: host (string) - ip address with or without port,
      *             is_secure (bool) - connection is secure
      */
-    Connect(string host, bool is_secure = true);
+    Connect(const std::string &host, const bool &is_secure = true);
     /**
      * Method name: Connect
      * Description: Constructor for the Connect class.
@@ -43,50 +41,50 @@ public:
      *             port (unsigned short) - port number,
      *             is_secure (bool) - connection is secure
      */
-    Connect(string host, unsigned short port, bool is_secure = true);
+    Connect(const std::string &host, const unsigned short &port, const bool &is_secure = true);
     /**
      * Method name: setHost
      * Description: Set the host to a specified string.
      * Parameters: host (string) - ip address
      */
-    void setHost(string host);
+    void setHost(const std::string &host);
     /**
      * Method name: setPort
      * Description: Set the port to a specified number.
      * Parameters: port (unsigned short) - port number
      */
-    void setPort(unsigned short port);
+    void setPort(const unsigned short &port);
     /**
      * Method name: setCert
      * Description: Set the path to a cert file.
      * Parameters: cert (string) - cert path
      */
-    void setCert(string cert);
+    void setCert(const std::string &cert);
     /**
      * Method name: setKey
      * Description: Set the path to a key file.
      * Parameters: key (string) - key path
      */
-    void setKey(string key);
+    void setKey(const std::string &key);
 private:
     /**
      * Method name: validateHost
      * Description: Check whether a host is valid and set type to IP version.
      * Parameters: host (string) - the host to checj
      */
-    bool validateHost(const string& host);
+    bool validateHost(const std::string &host);
     /**
      * Method name: portCheck
      * Description: Check whether a port is in a valid range.
      * Parameters: port (unsigned short) - the port to check
      */
-    bool portCheck(const unsigned short& port);
+    bool portCheck(const unsigned short &port);
     /**
      * Method name: portCheck
      * Description: Check whether port as a string is a valid number and is in a valid range.
      * Parameters: port (string) - the port to check
      */
-    bool portCheck(const string& port);
+    bool portCheck(const std::string &port);
 protected:
     /**
      * Method name: initOpenSSL
@@ -103,12 +101,12 @@ protected:
      * Description: Clean up OpenSSL.
      */
     void cleanupOpenSSL();
-protected:
-    IPType m_type;
-    bool m_secure;
-    string m_cert, m_key;
-    string m_host;
-    unsigned short m_port;
+    // Members
+    IPType type;
+    bool secure;
+    std::string cert, key;
+    std::string host;
+    unsigned short port;
 };
 
 #endif /* defined(__SeckSock__Connect__) */

@@ -16,34 +16,34 @@
  * Parameters: host (string) - ip address with or without port, 
  *             is_secure (bool) - connection is secure
  */
-Connect::Connect(string host, bool is_secure)
+Connect::Connect(const std::string &host, const bool &is_secure)
 {
-    m_secure = is_secure;
+    this->secure = is_secure;
     setCert("cert.pem");
     setKey("key.pem");
-    if(host.find(':') != string::npos)
+    if(host.find(':') != std::string::npos)
     {
         size_t pos = host.find(':');
-        m_host = host.substr(0, pos - 1);
-        if(!validateHost(m_host))
+        this->host = host.substr(0, pos - 1);
+        if(!validateHost(this->host))
         {
             perror("Invalid hostname or IP!");
             exit(EXIT_FAILURE);
         }
-        if(!portCheck(m_port))
+        if(!portCheck(this->port))
         {
             perror("Invalid port number or error parsing!");
             exit(EXIT_FAILURE);
         }
-        m_port = std::stoi(host.substr(pos + 1, host.length()));
+        this->port = std::stoi(host.substr(pos + 1, host.length()));
     }
     else
     {
-        m_host = host;
-        if(m_secure)
-            m_port = 443;
+        this->host = host;
+        if(this->secure)
+            this->port = 443;
         else
-            m_port = 80;
+            this->port = 80;
     }
 }
 
@@ -54,9 +54,9 @@ Connect::Connect(string host, bool is_secure)
  *             port (unsigned short) - port number,
  *             is_secure (bool) - connection is secure
  */
-Connect::Connect(string host, unsigned short port, bool is_secure)
+Connect::Connect(const std::string &host, const unsigned short &port, const bool &is_secure)
 {
-    m_secure = is_secure;
+    this->secure = is_secure;
     setCert("cert.pem");
     setKey("key.pem");
     if(!validateHost(host))
@@ -71,8 +71,8 @@ Connect::Connect(string host, unsigned short port, bool is_secure)
     }
     else
     {
-        m_host = host;
-        m_port = port;
+        this->host = host;
+        this->port = port;
     }
 }
 
@@ -81,9 +81,9 @@ Connect::Connect(string host, unsigned short port, bool is_secure)
  * Description: Set the host to a specified string.
  * Parameters: host (string) - ip address
  */
-void Connect::setHost(string host)
+void Connect::setHost(const std::string &host)
 {
-    m_host = host;
+    this->host = host;
 }
 
 /**
@@ -91,9 +91,9 @@ void Connect::setHost(string host)
  * Description: Set the port to a specified number.
  * Parameters: port (unsigned short) - port number
  */
-void Connect::setPort(unsigned short port)
+void Connect::setPort(const unsigned short &port)
 {
-    m_port = port;
+    this->port = port;
 }
 
 /**
@@ -101,9 +101,9 @@ void Connect::setPort(unsigned short port)
  * Description: Set the path to a cert file.
  * Parameters: cert (string) - cert path
  */
-void Connect::setCert(string cert)
+void Connect::setCert(const std::string &cert)
 {
-    m_cert = cert;
+    this->cert = cert;
 }
 
 /**
@@ -111,9 +111,9 @@ void Connect::setCert(string cert)
  * Description: Set the path to a key file.
  * Parameters: key (string) - key path
  */
-void Connect::setKey(string key)
+void Connect::setKey(const std::string &key)
 {
-    m_key = key;
+    this->key = key;
 }
 
 /**
@@ -121,18 +121,18 @@ void Connect::setKey(string key)
  * Description: Check whether a host is valid and set type to IP version.
  * Parameters: host (string) - the host to checj
  */
-bool Connect::validateHost(const string &host)
+bool Connect::validateHost(const std::string &host)
 {
     struct sockaddr_in sa4;
     struct sockaddr_in6 sa6;
     if(inet_pton(AF_INET, host.c_str(), &(sa4.sin_addr)) != 0)
     {
-        m_type = IPv4;
+        this->type = IPv4;
         return true;
     }
     else if(inet_pton(AF_INET6, host.c_str(), &(sa6.sin6_addr)) != 0)
     {
-        m_type = IPv6;
+        this->type = IPv6;
         return true;
     }
     else
@@ -146,7 +146,7 @@ bool Connect::validateHost(const string &host)
  * Description: Check whether a port is in a valid range.
  * Parameters: port (unsigned short) - the port to check
  */
-bool Connect::portCheck(const unsigned short& port)
+bool Connect::portCheck(const unsigned short &port)
 {
     return (0 < port && port < 65535);
 }
@@ -156,7 +156,7 @@ bool Connect::portCheck(const unsigned short& port)
  * Description: Check whether port as a string is a valid number and is in a valid range.
  * Parameters: port (string) - the port to check
  */
-bool Connect::portCheck(const string& port)
+bool Connect::portCheck(const std::string &port)
 {
     return std::all_of(port.begin(), port.end(), ::isdigit) &&
        (0 < std::stoi(port) && std::stoi(port) < 65535);
@@ -185,12 +185,12 @@ SSL_CTX * Connect::createContext()
         exit(EXIT_FAILURE);
     }
     SSL_CTX_ctrl(ctx, SSL_CTRL_SET_TMP_ECDH, 1 ,NULL);
-    if (SSL_CTX_use_certificate_file(ctx, m_cert.c_str(), SSL_FILETYPE_PEM) < 0)
+    if (SSL_CTX_use_certificate_file(ctx, this->cert.c_str(), SSL_FILETYPE_PEM) < 0)
     {
         ERR_print_errors_fp(stderr);
         exit(EXIT_FAILURE);
     }
-    if (SSL_CTX_use_PrivateKey_file(ctx, m_key.c_str(), SSL_FILETYPE_PEM) < 0 )
+    if (SSL_CTX_use_PrivateKey_file(ctx, this->key.c_str(), SSL_FILETYPE_PEM) < 0 )
     {
         ERR_print_errors_fp(stderr);
         exit(EXIT_FAILURE);

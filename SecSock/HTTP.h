@@ -13,22 +13,26 @@
 #include <string>
 #include <vector>
 
-using std::map;
-using std::make_pair;
-using std::string;
-using std::vector;
-
 class HTTP
 {
 public:
+    // Methods
     HTTP();
-    string parseAndRespond(vector<char> request);
+    void setWebRoot(const std::string &path);
+    std::string parseAndRespond(std::vector<char> &request);
 private:
-    map<const unsigned short, const string> status_codes;
-private:
+    // Members
+    const std::string http_version;
+    const std::string server_name;
+    std::string web_root;
+    std::vector<char> file_buffer;
+    std::map<const unsigned short, const std::string> status_codes;
+    // Methods
     void initStatusCodes();
-    string getFiletype(string filename);
-    string getStatusCode(unsigned short status_code);
+    bool readFromFile(std::string file_path);
+    std::string getContentType(const std::string &file_name);
+    std::string getContentLength();
+    std::string getStatusCode(unsigned short status_code);
 };
 
 #endif /* defined(__SecSock__HTTP__) */

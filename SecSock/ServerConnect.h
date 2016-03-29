@@ -23,14 +23,16 @@ public:
      *             port (unsigned short) - ip address with or without port,
      *             is_secure (bool) - connection is secure
      */
-    ServerConnect(string host, unsigned short port, bool is_secure = true) : Connect(host, port, is_secure) {};
+    // Methods
+    ServerConnect(const std::string &host, const unsigned short &port, const bool &is_secure = true) : Connect(host, port, is_secure) {};
     int createSocket();
     int bindListen(int sock, struct sockaddr* addr, socklen_t addrsize);
     void startServer();
     void stopServer();
 private:
-    std::atomic<bool> m_running;
-    string reply;
+    // Members
+    std::atomic<bool> running;
+    std::string reply;
 };
 
 #endif /* defined(__SeckSock__ServerConnect__) */
