@@ -6,20 +6,21 @@
 //  Copyright (c) 2016 LiosMor Security. All rights reserved.
 //
 
-#ifndef __SecSock__HTTP__
-#define __SecSock__HTTP__
+#ifndef __SecSock__HTTPServer__
+#define __SecSock__HTTPServer__
 
 #include <map>
 #include <string>
 #include <vector>
+#include "ServerConnect.h"
 
-class HTTP
+class HTTPServer : public ServerConnect
 {
 public:
     // Methods
-    HTTP();
+    HTTPServer(const std::string &host, const unsigned short &port, const bool &is_secure = true);
     void setWebRoot(const std::string &path);
-    std::string parseAndRespond(std::vector<char> &request);
+    std::string process(std::vector<char> &request);
 private:
     // Members
     const std::string http_version;
@@ -35,4 +36,4 @@ private:
     std::string getStatusCode(unsigned short status_code);
 };
 
-#endif /* defined(__SecSock__HTTP__) */
+#endif /* defined(__SecSock__HTTPServer__) */

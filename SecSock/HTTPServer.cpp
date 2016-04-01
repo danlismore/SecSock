@@ -8,20 +8,21 @@
 
 #include <algorithm>
 #include <fstream>
-#include "HTTP.h"
+#include "HTTPServer.h"
 
 using std::find;
 using std::ifstream;
 using std::ios;
 using std::to_string;
 
-HTTP::HTTP()
-: http_version("HTTP/1.1 "), server_name("Server: SecSock Web Server\r\n"), web_root("/var/www")
+HTTPServer::HTTPServer(const std::string &host, const unsigned short &port, const bool &is_secure)
+: ServerConnect(host, port, is_secure),
+  http_version("HTTP/1.1 "), server_name("Server: SecSock Web Server\r\n"), web_root("/var/www")
 {
     initStatusCodes();
 }
 
-void HTTP::initStatusCodes()
+void HTTPServer::initStatusCodes()
 {
     // 1** Informational
     status_codes.insert(std::make_pair(100, "100 Continue"));
@@ -91,19 +92,19 @@ void HTTP::initStatusCodes()
     status_codes.insert(std::make_pair(511, "511 Network Authentication Required"));
 }
 
-void HTTP::setWebRoot(const std::string &path)
+void HTTPServer::setWebRoot(const std::string &path)
 {
     this->web_root = path;
 }
 
-std::string HTTP::getStatusCode(unsigned short status_code)
+std::string HTTPServer::getStatusCode(unsigned short status_code)
 {
     std::map<const unsigned short, const std::string>::iterator status_it;
     status_it = status_codes.find(status_code);
     return status_it->second + "\r\n";
 }
 
-std::string HTTP::parseAndRespond(std::vector<char> &request)
+std::string HTTPServer::process(std::vector<char> &request)
 {
     std::vector<char>::iterator pos;
     pos = find(request.begin(), request.end(), ' ');
@@ -143,11 +144,11 @@ std::string HTTP::parseAndRespond(std::vector<char> &request)
         response += getStatusCode(403);
         response +="</h1></body></html>\r\n";
     }
-    printf("%s", response.c_str());
+    printf("%s\n", response.c_str());
     return response;
 }
 
-bool HTTP::readFromFile(std::string file_path)
+bool HTTPServer::readFromFile(std::string file_path)
 {
     ifstream infile(this->web_root + file_path, ios::ate|ios::in|ios::binary);
     if(infile.fail())
@@ -163,7 +164,7 @@ bool HTTP::readFromFile(std::string file_path)
     }
 }
 
-std::string HTTP::getContentType(const std::string &file_name)
+std::string HTTPServer::getContentType(const std::string &file_name)
 {
     if(file_name.find(".html") != std::string::npos)
         return "Content-type: text/html\r\n";
@@ -177,7 +178,7 @@ std::string HTTP::getContentType(const std::string &file_name)
         return "Content-type: text/plain\r\n";
 }
 
-std::string HTTP::getContentLength()
+std::string HTTPServer::getContentLength()
 {
     return "Content-length: " + to_string(file_buffer.size()) + "\r\n";
 }

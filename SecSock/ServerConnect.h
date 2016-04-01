@@ -29,6 +29,7 @@ public:
     int bindListen(int sock, struct sockaddr* addr, socklen_t addrsize);
     void startServer();
     void stopServer();
+    virtual std::string process(std::vector<char> &request) { return ""; };
 private:
     // Members
     std::atomic<bool> running;

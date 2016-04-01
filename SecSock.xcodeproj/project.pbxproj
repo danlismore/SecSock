@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4D70AFCD1CA803170063B6A7 /* HTTP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D70AFCB1CA803170063B6A7 /* HTTP.cpp */; };
+		4D70AFCD1CA803170063B6A7 /* HTTPServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D70AFCB1CA803170063B6A7 /* HTTPServer.cpp */; };
 		4DBD67B21CA2BEB9005695DC /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DBD67B11CA2BEB9005695DC /* main.cpp */; };
 		4DBD67BC1CA2BF0C005695DC /* Connect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DBD67B81CA2BF0C005695DC /* Connect.cpp */; };
 		4DBD67BD1CA2BF0C005695DC /* ServerConnect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DBD67BA1CA2BF0C005695DC /* ServerConnect.cpp */; };
@@ -26,8 +26,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		4D70AFCB1CA803170063B6A7 /* HTTP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HTTP.cpp; sourceTree = "<group>"; };
-		4D70AFCC1CA803170063B6A7 /* HTTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTP.h; sourceTree = "<group>"; };
+		4D70AFCB1CA803170063B6A7 /* HTTPServer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HTTPServer.cpp; sourceTree = "<group>"; };
+		4D70AFCC1CA803170063B6A7 /* HTTPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPServer.h; sourceTree = "<group>"; };
 		4DBD67AE1CA2BEB9005695DC /* SecSock */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SecSock; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DBD67B11CA2BEB9005695DC /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		4DBD67B81CA2BF0C005695DC /* Connect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Connect.cpp; sourceTree = "<group>"; };
@@ -69,8 +69,8 @@
 				4DBD67B11CA2BEB9005695DC /* main.cpp */,
 				4DBD67B81CA2BF0C005695DC /* Connect.cpp */,
 				4DBD67B91CA2BF0C005695DC /* Connect.h */,
-				4D70AFCB1CA803170063B6A7 /* HTTP.cpp */,
-				4D70AFCC1CA803170063B6A7 /* HTTP.h */,
+				4D70AFCB1CA803170063B6A7 /* HTTPServer.cpp */,
+				4D70AFCC1CA803170063B6A7 /* HTTPServer.h */,
 				4DBD67BA1CA2BF0C005695DC /* ServerConnect.cpp */,
 				4DBD67BB1CA2BF0C005695DC /* ServerConnect.h */,
 			);
@@ -136,7 +136,7 @@
 				4DBD67BC1CA2BF0C005695DC /* Connect.cpp in Sources */,
 				4DBD67B21CA2BEB9005695DC /* main.cpp in Sources */,
 				4DBD67BD1CA2BF0C005695DC /* ServerConnect.cpp in Sources */,
-				4D70AFCD1CA803170063B6A7 /* HTTP.cpp in Sources */,
+				4D70AFCD1CA803170063B6A7 /* HTTPServer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

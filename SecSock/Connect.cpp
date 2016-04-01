@@ -18,7 +18,6 @@
  */
 Connect::Connect(const std::string &host, const bool &is_secure)
 {
-    this->secure = is_secure;
     setCert("cert.pem");
     setKey("key.pem");
     if(host.find(':') != std::string::npos)
@@ -27,12 +26,12 @@ Connect::Connect(const std::string &host, const bool &is_secure)
         this->host = host.substr(0, pos - 1);
         if(!validateHost(this->host))
         {
-            perror("Invalid hostname or IP!");
+            perror("Invalid hostname or IP");
             exit(EXIT_FAILURE);
         }
         if(!portCheck(this->port))
         {
-            perror("Invalid port number or error parsing!");
+            perror("Invalid port number or error parsing");
             exit(EXIT_FAILURE);
         }
         this->port = std::stoi(host.substr(pos + 1, host.length()));
@@ -61,12 +60,12 @@ Connect::Connect(const std::string &host, const unsigned short &port, const bool
     setKey("key.pem");
     if(!validateHost(host))
     {
-        perror("Invalid hostname or IP!");
+        perror("Invalid hostname or IP");
         exit(EXIT_FAILURE);
     }
     if(!portCheck(port))
     {
-        perror("Invalid port number!");
+        perror("Invalid port number");
         exit(EXIT_FAILURE);
     }
     else

@@ -8,7 +8,7 @@
 
 #include <unistd.h>
 #include <vector>
-#include "HTTP.h"
+#include "HTTPServer.h"
 #include "ServerConnect.h"
 
 int ServerConnect::createSocket()
@@ -115,8 +115,7 @@ void ServerConnect::startServer()
                 perror("Could not read from client");
                 exit(EXIT_FAILURE);
             }
-            HTTP http;
-            reply = http.parseAndRespond(request);
+            reply = process(request);
             if(write(client, reply.c_str(), reply.length()) < 0)
             {
                 perror("Could not write to client");
@@ -125,7 +124,6 @@ void ServerConnect::startServer()
             for (auto it = request.begin(); it != request.end(); it++)
             {
                 printf("%c", *it);
-                //reply += *it;
             }
         }
     }
