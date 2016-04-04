@@ -8,10 +8,10 @@
 
 #include <unistd.h>
 #include <vector>
-#include "HTTPServer.h"
-#include "ServerConnect.h"
+//#include "HTTPServer.h"
+#include "TCPServer.h"
 
-int ServerConnect::createSocket()
+int TCPServer::createSocket()
 {
     int sock = socket(this->type, SOCK_STREAM, 0);
     if(this->type == IPv4)
@@ -33,7 +33,7 @@ int ServerConnect::createSocket()
     return sock;
 }
 
-int ServerConnect::bindListen(int sock, struct sockaddr* addr, socklen_t addrsize)
+int TCPServer::bindListen(int sock, struct sockaddr* addr, socklen_t addrsize)
 {
     if(sock < 0)
     {
@@ -54,7 +54,7 @@ int ServerConnect::bindListen(int sock, struct sockaddr* addr, socklen_t addrsiz
 }
 
 
-void ServerConnect::startServer()
+void TCPServer::startServer()
 {
     this->running = true;
     initOpenSSL();
@@ -131,7 +131,7 @@ void ServerConnect::startServer()
     close(sock);
 }
 
-void ServerConnect::stopServer()
+void TCPServer::stopServer()
 {
     this->running = false;
 }

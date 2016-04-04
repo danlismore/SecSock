@@ -16,7 +16,7 @@ using std::ios;
 using std::to_string;
 
 HTTPServer::HTTPServer(const std::string &host, const unsigned short &port, const bool &is_secure)
-: ServerConnect(host, port, is_secure),
+: TCPServer(host, port, is_secure),
   http_version("HTTP/1.1 "), server_name("Server: SecSock Web Server\r\n"), web_root("/var/www")
 {
     initStatusCodes();

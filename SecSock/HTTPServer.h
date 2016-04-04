@@ -12,9 +12,9 @@
 #include <map>
 #include <string>
 #include <vector>
-#include "ServerConnect.h"
+#include "TCPServer.h"
 
-class HTTPServer : public ServerConnect
+class HTTPServer : public TCPServer
 {
 public:
     // Methods

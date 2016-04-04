@@ -8,15 +8,15 @@
 
 #include <arpa/inet.h>
 #include <sys/socket.h>
-#include "Connect.h"
+#include "TCP.h"
 
 /**
- * Method name: Connect
- * Description: Constructor for the Connect class.
+ * Method name: TCP
+ * Description: Constructor for the TCP class.
  * Parameters: host (string) - ip address with or without port, 
  *             is_secure (bool) - connection is secure
  */
-Connect::Connect(const std::string &host, const bool &is_secure)
+TCP::TCP(const std::string &host, const bool &is_secure)
 {
     setCert("cert.pem");
     setKey("key.pem");
@@ -47,13 +47,13 @@ Connect::Connect(const std::string &host, const bool &is_secure)
 }
 
 /**
- * Method name: Connect
- * Description: Constructor for the Connect class.
+ * Method name: TCP
+ * Description: Constructor for the TCP class.
  * Parameters: host (string) - ip address,
  *             port (unsigned short) - port number,
  *             is_secure (bool) - connection is secure
  */
-Connect::Connect(const std::string &host, const unsigned short &port, const bool &is_secure)
+TCP::TCP(const std::string &host, const unsigned short &port, const bool &is_secure)
 {
     this->secure = is_secure;
     setCert("cert.pem");
@@ -80,7 +80,7 @@ Connect::Connect(const std::string &host, const unsigned short &port, const bool
  * Description: Set the host to a specified string.
  * Parameters: host (string) - ip address
  */
-void Connect::setHost(const std::string &host)
+void TCP::setHost(const std::string &host)
 {
     this->host = host;
 }
@@ -90,7 +90,7 @@ void Connect::setHost(const std::string &host)
  * Description: Set the port to a specified number.
  * Parameters: port (unsigned short) - port number
  */
-void Connect::setPort(const unsigned short &port)
+void TCP::setPort(const unsigned short &port)
 {
     this->port = port;
 }
@@ -100,7 +100,7 @@ void Connect::setPort(const unsigned short &port)
  * Description: Set the path to a cert file.
  * Parameters: cert (string) - cert path
  */
-void Connect::setCert(const std::string &cert)
+void TCP::setCert(const std::string &cert)
 {
     this->cert = cert;
 }
@@ -110,7 +110,7 @@ void Connect::setCert(const std::string &cert)
  * Description: Set the path to a key file.
  * Parameters: key (string) - key path
  */
-void Connect::setKey(const std::string &key)
+void TCP::setKey(const std::string &key)
 {
     this->key = key;
 }
@@ -120,7 +120,7 @@ void Connect::setKey(const std::string &key)
  * Description: Check whether a host is valid and set type to IP version.
  * Parameters: host (string) - the host to checj
  */
-bool Connect::validateHost(const std::string &host)
+bool TCP::validateHost(const std::string &host)
 {
     struct sockaddr_in sa4;
     struct sockaddr_in6 sa6;
@@ -145,7 +145,7 @@ bool Connect::validateHost(const std::string &host)
  * Description: Check whether a port is in a valid range.
  * Parameters: port (unsigned short) - the port to check
  */
-bool Connect::portCheck(const unsigned short &port)
+bool TCP::portCheck(const unsigned short &port)
 {
     return (0 < port && port < 65535);
 }
@@ -155,7 +155,7 @@ bool Connect::portCheck(const unsigned short &port)
  * Description: Check whether port as a string is a valid number and is in a valid range.
  * Parameters: port (string) - the port to check
  */
-bool Connect::portCheck(const std::string &port)
+bool TCP::portCheck(const std::string &port)
 {
     return std::all_of(port.begin(), port.end(), ::isdigit) &&
        (0 < std::stoi(port) && std::stoi(port) < 65535);
@@ -165,7 +165,7 @@ bool Connect::portCheck(const std::string &port)
  * Method name: initOpenSSL
  * Description: Initiate OpenSSL algorithms and error strings.
  */
-void Connect::initOpenSSL()
+void TCP::initOpenSSL()
 {
     SSL_load_error_strings();
     OpenSSL_add_ssl_algorithms();
@@ -175,7 +175,7 @@ void Connect::initOpenSSL()
  * Method name: createContext
  * Description: Create the context, get cert and key from file.
  */
-SSL_CTX * Connect::createContext()
+SSL_CTX * TCP::createContext()
 {
     SSL_CTX * ctx = SSL_CTX_new(TLSv1_method());
     if (!ctx)
@@ -201,7 +201,7 @@ SSL_CTX * Connect::createContext()
  * Method name: cleanupOpenSSL
  * Description: Clean up OpenSSL.
  */
-void Connect::cleanupOpenSSL()
+void TCP::cleanupOpenSSL()
 {
     EVP_cleanup();
 }

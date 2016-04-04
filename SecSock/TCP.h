@@ -13,7 +13,7 @@
 #include <openssl/ssl.h>
 #include <openssl/err.h>
 
-class Connect
+class TCP
 {
 public:
     /**
@@ -33,7 +33,7 @@ public:
      * Parameters: host (string) - ip address with or without port,
      *             is_secure (bool) - connection is secure
      */
-    Connect(const std::string &host, const bool &is_secure = true);
+    TCP(const std::string &host, const bool &is_secure = true);
     /**
      * Method name: Connect
      * Description: Constructor for the Connect class.
@@ -41,7 +41,7 @@ public:
      *             port (unsigned short) - port number,
      *             is_secure (bool) - connection is secure
      */
-    Connect(const std::string &host, const unsigned short &port, const bool &is_secure = true);
+    TCP(const std::string &host, const unsigned short &port, const bool &is_secure = true);
     /**
      * Method name: setHost
      * Description: Set the host to a specified string.

@@ -10,21 +10,21 @@
 #define __SeckSock__ServerConnect__
 
 #include <arpa/inet.h>
-#include "Connect.h"
+#include "TCP.h"
 
-class ServerConnect : public Connect
+class TCPServer : public TCP
 {
 public:
     /**
-     * Method name: ServerConnect
-     * Description: Constructor for the ServerConnect class, needs no additional functionality so call
+     * Method name: TCPServer
+     * Description: Constructor for the TCPServer class, needs no additional functionality so call
      *              parent constructor.
      * Parameters: host (string) - ip address with or without port,
      *             port (unsigned short) - ip address with or without port,
      *             is_secure (bool) - connection is secure
      */
     // Methods
-    ServerConnect(const std::string &host, const unsigned short &port, const bool &is_secure = true) : Connect(host, port, is_secure) {};
+    TCPServer(const std::string &host, const unsigned short &port, const bool &is_secure = true) : TCP(host, port, is_secure) {};
     int createSocket();
     int bindListen(int sock, struct sockaddr* addr, socklen_t addrsize);
     void startServer();
