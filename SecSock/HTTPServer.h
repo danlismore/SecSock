@@ -20,7 +20,7 @@ public:
     // Methods
     HTTPServer(const std::string &host, const unsigned short &port, const bool &is_secure = true);
     void setWebRoot(const std::string &path);
-    std::string process(std::vector<char> &request);
+    std::string process(std::vector<char> &request) override;
 private:
     // Members
     const std::string http_version;

@@ -132,17 +132,21 @@ std::string HTTPServer::process(std::vector<char> &request)
     }
     else
     {
+        std::string status;
         if(errno == EACCES)
-            response += getStatusCode(403);
+            status = getStatusCode(403);
         else if(errno == ENOENT)
-            response += getStatusCode(404);
+            status = getStatusCode(404);
+        response += status;
         response += this->server_name;
         response += getContentType(".html");
         response += "Content-length: ";
-        response += to_string(100);
-        response += "\r\n\r\n<!DOCTYPE html><html><head><title>Error 404 Page</title></head><body><p align='center'><h1>Error ";
-        response += getStatusCode(403);
+        response += "\r\n\r\n<!DOCTYPE html><html><head><title>Error ";
+        response += status.substr(0,3);
+        response += " Page</title></head><body><p align='center'><h1>Error ";
+        response += status;
         response +="</h1></body></html>\r\n";
+        response.insert(response.find("\r\n\r\n"), to_string(response.length()));
     }
     printf("%s\n", response.c_str());
     return response;

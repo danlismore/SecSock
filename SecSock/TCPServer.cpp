@@ -8,9 +8,13 @@
 
 #include <unistd.h>
 #include <vector>
-//#include "HTTPServer.h"
 #include "TCPServer.h"
 
+/**
+ * Method name: createSocket
+ * Description: Create a IPv4 or IPv6 TCP socket depending on IP address type
+ *              determined by the address string.
+ */
 int TCPServer::createSocket()
 {
     int sock = socket(this->type, SOCK_STREAM, 0);
@@ -33,6 +37,13 @@ int TCPServer::createSocket()
     return sock;
 }
 
+/**
+ * Method name: bindListen
+ * Description: Bind to address specified by the sockaddr structure.
+ * Parameters: sock (int) - the status of the sock we're binding to.
+ *             addr (sockaddr*) - pointer to the socket address structure.
+ *             addrsize (socklen_t) - size of the socket address structure.
+ */
 int TCPServer::bindListen(int sock, struct sockaddr* addr, socklen_t addrsize)
 {
     if(sock < 0)
@@ -53,7 +64,12 @@ int TCPServer::bindListen(int sock, struct sockaddr* addr, socklen_t addrsize)
     return sock;
 }
 
-
+/**
+ * Method name: startServer
+ * Description: Start the TCP server, read and write using POSIX or OpenSSL 
+ * depending on whether server is "secure" or not. The latter requires a 
+ * certificate and key in the executable directory.
+ */
 void TCPServer::startServer()
 {
     this->running = true;
@@ -131,6 +147,11 @@ void TCPServer::startServer()
     close(sock);
 }
 
+/**
+ * Method name: stopServer
+ * Description: Stop the TCP server, this currently doesn't work as startServer
+ * won't break out of the loop. Stop server should be called from a seperate thread.
+ */
 void TCPServer::stopServer()
 {
     this->running = false;
