@@ -25,6 +25,20 @@ public:
      */
     // Methods
     TCPServer(const std::string &host, const unsigned short &port, const bool &is_secure = true) : TCP(host, port, is_secure) {};
+    void startServer();
+    /**
+     * Method name: stopServer
+     * Description: Stop the TCP server, this currently doesn't work as startServer
+     * won't break out of the loop. Stop server should be called from a seperate thread.
+     */
+    void stopServer();
+    /**
+     * Method name: process
+     * Description: Pure virtual function, for processing the request buffer, this must
+     *              be overridden with behaviour specific to the protocol being implmented.
+     */
+    virtual std::string process(std::vector<char> &request) = 0;
+private:
     /**
      * Method name: createSocket
      * Description: Create a IPv4 or IPv6 TCP socket depending on IP address type
@@ -45,20 +59,6 @@ public:
      * depending on whether server is "secure" or not. The latter requires a
      * certificate and key in the executable directory.
      */
-    void startServer();
-    /**
-     * Method name: stopServer
-     * Description: Stop the TCP server, this currently doesn't work as startServer
-     * won't break out of the loop. Stop server should be called from a seperate thread.
-     */
-    void stopServer();
-    /**
-     * Method name: process
-     * Description: Pure virtual function, for processing the request buffer, this must
-     *              be overridden with behaviour specific to the protocol being implmented.
-     */
-    virtual std::string process(std::vector<char> &request) = 0;
-private:
     // Members
     std::atomic<bool> running;
     std::string reply;

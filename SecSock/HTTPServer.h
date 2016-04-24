@@ -20,6 +20,7 @@ public:
     // Methods
     HTTPServer(const std::string &host, const unsigned short &port, const bool &is_secure = true);
     void setWebRoot(const std::string &path);
+protected:
     std::string process(std::vector<char> &request) override;
 private:
     // Members
@@ -33,6 +34,7 @@ private:
     bool readFromFile(std::string file_path);
     std::string getContentType(const std::string &file_name);
     std::string getContentLength();
+    std::string getContentLength(std::string &content);
     std::string getStatusCode(unsigned short status_code);
 };
 

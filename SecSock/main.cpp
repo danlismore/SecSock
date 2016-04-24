@@ -9,9 +9,12 @@
 #include <iostream>
 #include <future>
 #include <thread>
+#include <string>
 #include "HTTPServer.h"
+#include "Utility.h"
 
 int main(int argc, const char * argv[]) {
+    
     HTTPServer server("127.0.0.1", 6001, false);
     server.startServer();
     return 0;

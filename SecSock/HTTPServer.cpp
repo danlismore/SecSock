@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <fstream>
 #include "HTTPServer.h"
+#include "Utility.h"
 
 using std::find;
 using std::ifstream;
@@ -124,7 +125,7 @@ std::string HTTPServer::process(std::vector<char> &request)
             response += getContentType(request_path);
             response += getContentLength();
             response += "\r\n";
-            for(pos = this->file_buffer.begin() ; pos != this->file_buffer.end(); ++pos)
+            for(pos = this->file_buffer.begin(); pos != this->file_buffer.end(); ++pos)
             {
                 response += *pos;
             }
@@ -139,14 +140,9 @@ std::string HTTPServer::process(std::vector<char> &request)
             status = getStatusCode(404);
         response += status;
         response += this->server_name;
-        response += getContentType(".html");
-        response += "Content-length: ";
-        response += "\r\n\r\n<!DOCTYPE html><html><head><title>Error ";
-        response += status.substr(0,3);
-        response += " Page</title></head><body><p align='center'><h1>Error ";
-        response += status;
-        response +="</h1></body></html>\r\n";
-        response.insert(response.find("\r\n\r\n"), to_string(response.length()));
+        response += getContentType(".html") + "\r\n\r\n";
+        response += "<!DOCTYPE html><html><head><title>Error " + status.substr(0,3) + " Page</title></head><body><p align='center'><h1>Error " + status + "</h1></body></html>\r\n";
+        response.insert(response.find("\r\n\r\n"), "\r\n" + getContentLength(response));
     }
     printf("%s\n", response.c_str());
     return response;
@@ -178,6 +174,8 @@ std::string HTTPServer::getContentType(const std::string &file_name)
         return "Content-type: image/jpeg\r\n";
     else if(file_name.find(".png") != std::string::npos)
         return "Content-type: image/png\r\n";
+    else if(file_name.find(".pdf") != std::string::npos)
+        return "Content-type: application/pdf\r\n";
     else
         return "Content-type: text/plain\r\n";
 }
@@ -185,4 +183,9 @@ std::string HTTPServer::getContentType(const std::string &file_name)
 std::string HTTPServer::getContentLength()
 {
     return "Content-length: " + to_string(file_buffer.size()) + "\r\n";
+}
+
+std::string HTTPServer::getContentLength(std::string &content)
+{
+    return "Content-length: " + to_string(content.length() + countDigits(content.length(), 10));
 }
