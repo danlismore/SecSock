@@ -32,6 +32,7 @@ public:
      * won't break out of the loop. Stop server should be called from a seperate thread.
      */
     void stopServer();
+protected:
     /**
      * Method name: process
      * Description: Pure virtual function, for processing the request buffer, this must
